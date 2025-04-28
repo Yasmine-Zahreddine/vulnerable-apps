@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# VSCode settings (optional, if you use VSCode)
+.vscode/
+
+# Pytest cache
+.pytest_cache/
+
+# Mypy and Pyright type check artifacts
+.mypy_cache/
+.pyright/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+
+# Logs
+*.log
+
+# Database files (example: SQLite)
+*.sqlite3
+
+# Environment variables files
+.env
+.env.*
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Pydantic compiled models (if using)
+pydantic_schema_cache/
+
+# OS generated files
+.DS_Store
+Thumbs.db

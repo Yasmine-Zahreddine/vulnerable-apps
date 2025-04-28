@@ -1,61 +1,627 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Feedback Submission</title>
-  <style>
-    body {
-      background-color: #f0f2f5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      font-family: Arial, sans-serif;
-    }
-    .form-container {
-      background-color: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      width: 350px;
-    }
-    .form-container h1 {
-      margin-bottom: 20px;
-      font-size: 24px;
-      color: #333;
-      text-align: center;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-      font-size: 16px;
-    }
-    button {
-      width: 100%;
-      background-color: #4CAF50;
-      color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSolutions Inc. | Interactive Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
 </head>
+<style>
+    /* General Styles */
+    :root {
+        --primary-color: #4CAF50;
+        --secondary-color: #2E7D32;
+        --accent-color: #8BC34A;
+        --dark-color: #444444;
+        --light-color: #f9f9f9;
+        --text-color: #333;
+        --text-light: #555;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        background-color: var(--light-color);
+        margin: 0;
+        padding: 0;
+        color: var(--text-color);
+    }
+
+    /* Header Styles */
+    header {
+        color: white;
+        padding: 60px 0 40px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        position: relative;
+        overflow: hidden;
+    }
+
+    header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: var(--accent-color);
+    }
+
+    header h1 {
+        font-size: 3em;
+        margin: 0;
+        font-weight: 700;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 1s ease;
+    }
+
+    header p {
+        font-size: 1.3em;
+        margin: 15px 0 0;
+        font-weight: 300;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Navigation */
+    nav {
+        background-color: var(--accent-color);
+        color: white;
+        padding: 15px 0;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 20px;
+        font-size: 18px;
+        font-weight: 500;
+        padding: 5px 10px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+        background-color: var(--primary-color);
+        text-decoration: none;
+    }
+
+    nav a i {
+        margin-right: 8px;
+    }
+
+    /* Main Content */
+    .content {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    h1, h2, h3 {
+        color: var(--primary-color);
+    }
+
+    h2 {
+        font-size: 2.2em;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    h2::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background: var(--accent-color);
+        border-radius: 2px;
+    }
+
+    p {
+        font-size: 1.1em;
+        color: var(--text-light);
+        line-height: 1.8;
+    }
+
+    /* Sections */
+    .section {
+        margin-bottom: 60px;
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .section img {
+        max-width: 100%;
+        border-radius: 8px;
+        margin-top: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Services Grid */
+    .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+
+    .service-card {
+        background: white;
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        border-top: 4px solid var(--accent-color);
+    }
+
+    .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-card i {
+        font-size: 2.5em;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+    }
+
+    .service-card h3 {
+        margin-top: 0;
+        color: var(--dark-color);
+    }
+
+    /* Team Section */
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+    }
+
+    .team-member {
+        text-align: center;
+    }
+
+    .team-member img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid var(--accent-color);
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .team-member:hover img {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Feedback Section */
+    .feedback-section {
+        margin-top: 30px;
+        padding: 30px;
+        background-color: #f8f8f8;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .feedback-section h2 {
+        text-align: center;
+    }
+
+    form {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--dark-color);
+    }
+
+    textarea, input[type="text"], input[type="email"] {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border 0.3s ease;
+    }
+
+    textarea {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    textarea:focus, input[type="text"]:focus, input[type="email"]:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+    }
+
+    input[type="submit"] {
+        padding: 12px 25px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-2px);
+    }
+
+    /* Testimonials */
+    .testimonials {
+        margin-top: 50px;
+    }
+
+    .testimonial-slider {
+        display: flex;
+        overflow-x: auto;
+        gap: 30px;
+        padding: 20px 0;
+        scroll-snap-type: x mandatory;
+    }
+
+    .testimonial {
+        min-width: 300px;
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        scroll-snap-align: start;
+    }
+
+    .testimonial-content {
+        font-style: italic;
+        margin-bottom: 15px;
+    }
+
+    .testimonial-author {
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    /* Footer */
+    footer {
+        background: linear-gradient(135deg, var(--dark-color), #222);
+        color: white;
+        padding: 50px 0 20px;
+        margin-top: 80px;
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        padding: 0 20px;
+    }
+
+    .footer-column h3 {
+        color: white;
+        margin-top: 0;
+        font-size: 1.3em;
+    }
+
+    .footer-column p, .footer-column a {
+        color: #ccc;
+        line-height: 1.8;
+    }
+
+    .footer-column a {
+        display: block;
+        margin-bottom: 8px;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer-column a:hover {
+        color: white;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+        background: var(--primary-color);
+        transform: translateY(-3px);
+    }
+
+    .copyright {
+        text-align: center;
+        padding-top: 30px;
+        margin-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        header h1 {
+            font-size: 2.2em;
+        }
+        
+        nav a {
+            margin: 0 10px;
+            font-size: 16px;
+        }
+        
+        .section {
+            padding: 20px;
+        }
+    }
+</style>
 <body>
-  <div class="form-container">
-    <h1>Submit Feedback</h1>
-    <form action="/submit" method="post">
-      <input type="text" name="comment" placeholder="Your comment here" required>
-      <button type="submit">Submit</button>
-    </form>
-  </div>
+    <nav>
+        <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+        <a href="#services"><i class="fas fa-cogs"></i> Services</a>
+        <a href="#team"><i class="fas fa-users"></i> Our Team</a>
+        <a href="#updates"><i class="fas fa-newspaper"></i> Updates</a>
+        <a href="#feedback"><i class="fas fa-comment-alt"></i> Feedback</a>
+    </nav>
+    <header>
+        <h1>WebSolutions Inc.</h1>
+        <p>Innovative web solutions tailored to your business needs</p>
+    </header>
+
+    
+
+    <div class="content">
+        <!-- About Section -->
+        <div class="section" id="about">
+            <h2>About Our Company</h2>
+            <p>Founded in 2015, WebSolutions Inc. has been at the forefront of digital innovation, helping businesses of all sizes establish their online presence. Our team of experts combines technical expertise with creative vision to deliver outstanding results.</p>
+            <p>We believe in building long-term relationships with our clients by providing exceptional service and cutting-edge solutions that drive real business growth.</p>
+            <img src="{{ url_for('static', path='about-us.jpg') }}" alt="Our office space">
+        </div>
+
+        <!-- Services Section -->
+        <div class="section" id="services">
+            <h2>Our Comprehensive Services</h2>
+            <p>We offer a complete suite of digital services to meet all your online needs:</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Web Development</h3>
+                    <p>Custom websites and web applications built with the latest technologies for optimal performance.</p>
+                </div>
+                
+                <div class="service-card">
+                    <i class="fas fa-paint-brush"></i>
+                    <h3>UI/UX Design</h3>
+                    <p>Beautiful, intuitive interfaces designed to enhance user experience and engagement.</p>
+                </div>
+                
+                <div class="service-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Development</h3>
+                    <p>Cross-platform mobile applications that work seamlessly on all devices.</p>
+                </div>
+                
+                <div class="service-card">
+                    <i class="fas fa-search"></i>
+                    <h3>SEO Optimization</h3>
+                    <p>Comprehensive strategies to improve your search rankings and online visibility.</p>
+                </div>
+                
+                <div class="service-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Digital Marketing</h3>
+                    <p>Targeted campaigns to reach your audience and maximize conversions.</p>
+                </div>
+                
+                <div class="service-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Security Audits</h3>
+                    <p>Thorough security assessments to protect your digital assets.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <div class="section" id="team">
+            <h2>Meet Our Team</h2>
+            <p>Our talented professionals bring diverse skills and experience to deliver exceptional results.</p>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="{{ url_for('static', path='team1.jpg') }}" alt="Sarah Johnson">
+                    <h3>Sarah Johnson</h3>
+                    <p>CEO & Founder</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="{{ url_for('static', path='team2.jpg') }}" alt="Michael Chen">
+                    <h3>Michael Chen</h3>
+                    <p>Lead Developer</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="{{ url_for('static', path='team3.jpg') }}" alt="Emily Rodriguez">
+                    <h3>Emily Rodriguez</h3>
+                    <p>UX Designer</p>
+                </div>
+                
+                <div class="team-member">
+                    <img src="{{ url_for('static', path='team4.jpg') }}" alt="David Kim">
+                    <h3>David Kim</h3>
+                    <p>Marketing Specialist</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Updates Section -->
+        <div class="section" id="updates">
+            <h2>Recent News & Updates</h2>
+            <p>Stay informed about our latest projects and industry insights.</p>
+            
+            <div class="update-item" style="margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid #eee;">
+                <h3>New Partnership with TechForward</h3>
+                <p class="update-date" style="color: var(--primary-color); font-weight: 600; margin-bottom: 10px;">June 15, 2025</p>
+                <p>We're excited to announce our strategic partnership with TechForward to deliver cutting-edge AI solutions to our clients.</p>
+            </div>
+            
+            <div class="update-item" style="margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid #eee;">
+                <h3>Website Redesign Launch</h3>
+                <p class="update-date" style="color: var(--primary-color); font-weight: 600; margin-bottom: 10px;">May 28, 2025</p>
+                <p>Our newly redesigned website is now live, featuring improved navigation and enhanced performance.</p>
+            </div>
+            
+            <div class="update-item">
+                <h3>Industry Conference Participation</h3>
+                <p class="update-date" style="color: var(--primary-color); font-weight: 600; margin-bottom: 10px;">April 10, 2025</p>
+                <p>Our team will be speaking at the upcoming Digital Innovation Summit about the future of web security.</p>
+            </div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="section testimonials">
+            <h2>What Our Clients Say</h2>
+            
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        "WebSolutions transformed our online presence completely. Their team delivered beyond our expectations with a website that truly represents our brand."
+                    </div>
+                    <div class="testimonial-author">- Robert Taylor, CEO of BrandVision</div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        "The mobile app developed by WebSolutions has significantly improved our customer engagement. Their attention to detail is remarkable."
+                    </div>
+                    <div class="testimonial-author">- Jennifer Lee, Product Manager at ShopEase</div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="testimonial-content">
+                        "Working with WebSolutions was a game-changer for our business. Their SEO strategies doubled our organic traffic in just three months."
+                    </div>
+                    <div class="testimonial-author">- Mark Williams, Marketing Director at GreenLife</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Section -->
+        <div class="section feedback-section" id="feedback">
+            <h2>We Value Your Feedback</h2>
+            <p>Your thoughts help us improve our services. Share your experience with us.</p>
+            
+            <form action="/submit" method="POST">
+                <div class="form-group">
+                    <label for="name">Your Name (optional):</label>
+                    <input type="text" id="name" name="name" placeholder="John Doe">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email (optional):</label>
+                    <input type="email" id="email" name="email" placeholder="your@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="feedback">Your Feedback:</label>
+                    <textarea name="comment" id="feedback" placeholder="Let us know what you think about our services..."></textarea>
+                </div>
+                
+                <input type="submit" value="Submit Feedback">
+            </form>
+
+            {% if feedback %}
+            <div class="feedback-display" style="margin-top: 40px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                <h3 style="margin-top: 0; color: var(--primary-color);">Your Feedback:</h3>
+                <div style="font-size: 1.1em; line-height: 1.6;">
+                    {{ feedback | safe }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>WebSolutions Inc.</h3>
+                <p>Innovative web solutions for the modern business. Let us help you build your digital future.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <a href="#about">About Us</a>
+                <a href="#services">Our Services</a>
+                <a href="#team">Our Team</a>
+                <a href="#updates">Updates</a>
+                <a href="#feedback">Feedback</a>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> 123 Tech Street, Silicon Valley, CA</p>
+                <p><i class="fas fa-phone" style="margin-right: 10px;"></i> (555) 123-4567</p>
+                <p><i class="fas fa-envelope" style="margin-right: 10px;"></i> info@websolutions.demo</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 WebSolutions Inc. All rights reserved. | <a href="#" style="color: var(--accent-color);">Privacy Policy</a> | <a href="#" style="color: var(--accent-color);">Terms of Service</a></p>
+        </div>
+    </footer>
 </body>
 </html>

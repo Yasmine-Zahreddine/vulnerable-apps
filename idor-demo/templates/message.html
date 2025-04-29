@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message - SecureMail</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .logo span {
+            color: #3498db;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .back-btn {
+            background-color: #7f8c8d;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        .message-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .message-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .message-content {
+            line-height: 1.6;
+        }
+        .security-note {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Secure<span>Mail</span></div>
+        <div class="user-info">
+            <a href="/dashboard" class="back-btn">Back to Dashboard</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="message-card">
+            <div class="message-header">
+                <h2>Private Message</h2>
+                <p style="color: #7f8c8d;">Message ID: {{ message_id }}</p>
+            </div>
+            <div class="message-content">
+                <p>{{ message }}</p>
+            </div>
+        </div>
+        
+        <div class="security-note">
+            <h4>Security Notice</h4>
+            <p>This application is for educational purposes only. The vulnerability demonstrated here (Insecure Direct Object Reference) 
+            allows unauthorized access to messages by modifying the message ID in the URL.</p>
+        </div>
+    </div>
+</body>
+</html>

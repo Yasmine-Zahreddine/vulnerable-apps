@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SecureMail</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .logo span {
+            color: #3498db;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logout-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        .welcome-message {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        .instructions {
+            background-color: #f1f9fe;
+            border-left: 4px solid #3498db;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+        }
+        .message-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .message-link {
+            background-color: #3498db;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .message-link:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Secure<span>Mail</span></div>
+        <div class="user-info">
+            <span>Welcome, {{ username }}</span>
+            <button class="logout-btn">Logout</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="welcome-message">
+            <h2>Your Dashboard</h2>
+            <p>You have <strong>unread messages</strong> in your inbox.</p>
+        </div>
+        
+        <div class="instructions">
+            <h3>Access Messages</h3>
+            <p>Click below to view your messages:</p>
+            <div class="message-links">
+                <a href="/message/1" class="message-link">View Message 1</a>
+                <a href="/message/2" class="message-link">View Message 2</a>
+                <a href="/message/3" class="message-link">View Message 3</a>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                <em>Note: For demonstration purposes, try changing the message ID in the URL to access other messages.</em>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

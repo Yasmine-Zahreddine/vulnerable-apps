@@ -45,3 +45,6 @@ pydantic_schema_cache/
 # OS generated files
 .DS_Store
 Thumbs.db
+
+
+*.db

@@ -29,9 +29,9 @@ def init_db():
         c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ("bob", "bobpass"))
 
         # Insert dummy messages
-        c.execute("INSERT OR IGNORE INTO messages (id, user_id, content) VALUES (?, ?, ?)", (1, 1, "Hello from Alice"))
-        c.execute("INSERT OR IGNORE INTO messages (id, user_id, content) VALUES (?, ?, ?)", (2, 2, "Hi, this is Bob"))
-        c.execute("INSERT OR IGNORE INTO messages (id, user_id, content) VALUES (?, ?, ?)", (3, 2, "Hi, this is secret message for Bob"))
+        c.execute("INSERT OR IGNORE INTO messages (id, user_id, content) VALUES (?, ?, ?)", (1, 1, "Hello, this is a secret message for Alice"))
+        c.execute("INSERT OR IGNORE INTO messages (id, user_id, content) VALUES (?, ?, ?)", (2, 2, "Hi, this is a secret message for Bob"))
+        c.execute("INSERT OR IGNORE INTO messages (id, user_id, content) VALUES (?, ?, ?)", (3, 2, "Hi, this is another secret message for Bob"))
 
         conn.commit()
     except sqlite3.Error as e:

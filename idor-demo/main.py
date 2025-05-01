@@ -38,45 +38,70 @@ def dashboard(request: Request):
     username = get_current_user()
     if not username:
         return RedirectResponse(url="/login", status_code=302)
-    return templates.TemplateResponse("dashboard.html", {"request": request, "username": username})
+
+    # Query the database for the number of messages and their IDs for the current user
+    conn = sqlite3.connect("idor.db")
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT messages.id FROM messages
+        JOIN users ON users.id = messages.user_id
+        WHERE users.username = ?
+    """, (username,))
+    messages = cursor.fetchall()  # Fetch all message IDs
+    conn.close()
+
+    # Extract message IDs into a list
+    message_ids = [message[0] for message in messages]
+
+    # Pass the message count and IDs to the template
+    return templates.TemplateResponse("dashboard.html", {
+        "request": request,
+        "username": username,
+        "message_count": len(message_ids),
+        "message_ids": message_ids
+    })
 
 # View message by ID — here lies the IDOR vulnerability!
-# @app.get("/message/{message_id}", response_class=HTMLResponse)
-# def read_message(request: Request, message_id: int):
-#     username = get_current_user()
-#     if not username:
-#         return RedirectResponse(url="/login", status_code=302)
-
-#     # Vulnerable: no access control
-#     conn = sqlite3.connect("idor.db")
-#     cursor = conn.cursor()
-#     cursor.execute("SELECT content FROM messages WHERE id = ?", (message_id,))
-#     row = cursor.fetchone()
-#     conn.close()
-
-#     if row:
-#         return templates.TemplateResponse("message.html", {"request": request, "message": row[0]})
-#     return {"error": "Message not found"}
-
-
 @app.get("/message/{message_id}", response_class=HTMLResponse)
 def read_message(request: Request, message_id: int):
     username = get_current_user()
     if not username:
         return RedirectResponse(url="/login", status_code=302)
 
-    # Secure: Check if the current user owns the message
+    # Vulnerable: no access control
     conn = sqlite3.connect("idor.db")
     cursor = conn.cursor()
-    cursor.execute("""
-        SELECT content FROM messages
-        JOIN users ON users.id = messages.user_id
-        WHERE messages.id = ? AND users.username = ?
-    """, (message_id, username))
-    
+    cursor.execute("SELECT content FROM messages WHERE id = ?", (message_id,))
     row = cursor.fetchone()
     conn.close()
 
     if row:
         return templates.TemplateResponse("message.html", {"request": request, "message": row[0]})
-    return templates.TemplateResponse("error.html", {"request": request, "detail": "Message not found or access denied"})
+    return {"error": "Message not found"}
+
+
+
+# Secure version of the read_message function
+# This version checks if the current user owns the message before displaying it.
+
+# @app.get("/message/{message_id}", response_class=HTMLResponse)
+# def read_message(request: Request, message_id: int):
+#     username = get_current_user()
+#     if not username:
+#         return RedirectResponse(url="/login", status_code=302)
+
+#     # Secure: Check if the current user owns the message
+#     conn = sqlite3.connect("idor.db")
+#     cursor = conn.cursor()
+#     cursor.execute("""
+#         SELECT content FROM messages
+#         JOIN users ON users.id = messages.user_id
+#         WHERE messages.id = ? AND users.username = ?
+#     """, (message_id, username))
+    
+#     row = cursor.fetchone()
+#     conn.close()
+
+#     if row:
+#         return templates.TemplateResponse("message.html", {"request": request, "message": row[0]})
+#     return templates.TemplateResponse("error.html", {"request": request, "detail": "Message not found or access denied"})

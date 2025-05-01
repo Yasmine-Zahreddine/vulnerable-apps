@@ -89,16 +89,16 @@
     <div class="container">
         <div class="welcome-message">
             <h2>Your Dashboard</h2>
-            <p>You have <strong>unread messages</strong> in your inbox.</p>
+            <p>You have <strong>{{ message_count }}</strong> unread messages in your inbox.</p>
         </div>
         
         <div class="instructions">
             <h3>Access Messages</h3>
             <p>Click below to view your messages:</p>
             <div class="message-links">
-                <a href="/message/1" class="message-link">View Message 1</a>
-                <a href="/message/2" class="message-link">View Message 2</a>
-                <a href="/message/3" class="message-link">View Message 3</a>
+                {% for message_id in message_ids %}
+                    <a href="/message/{{ message_id }}" class="message-link">View Message {{ message_id }}</a>
+                {% endfor %}
             </div>
             <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
                 <em>Note: For demonstration purposes, try changing the message ID in the URL to access other messages.</em>

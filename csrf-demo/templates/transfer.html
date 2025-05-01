@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Crypto Platform | Transfer Funds</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --dark-color: #2d3436;
+            --light-color: #f8f9fa;
+            --success-color: #00b894;
+            --warning-color: #fdcb6e;
+            --error-color: #d63031;
+            --border-color: #dfe6e9;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f6fa;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-color);
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        .back-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .transfer-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .transfer-card h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #5649c0;
+        }
+        
+        .security-note {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #fff8e1;
+            border-left: 4px solid var(--warning-color);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                <span>SecureCrypto</span>
+            </div>
+            <a href="/dashboard" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </header>
+        
+        <div class="transfer-card">
+            <h2><i class="fas fa-exchange-alt"></i> Transfer Funds</h2>
+            
+            <form method="post" action="/transfer">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                <div class="form-group">
+                    <label for="to_user">Recipient Username</label>
+                    <input type="text" name="to_user" id="to_user" placeholder="Enter recipient's username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="amount">Amount (USD)</label>
+                    <input type="number" name="amount" id="amount" placeholder="0.00" step="0.01" min="0.01" required>
+                </div>
+                
+                <button type="submit" class="btn">Send Transfer</button>
+            </form>
+            
+            <div class="security-note">
+                <strong><i class="fas fa-shield-alt"></i> Security Note:</strong> 
+                Always verify the recipient's details before sending. Transfers cannot be reversed.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

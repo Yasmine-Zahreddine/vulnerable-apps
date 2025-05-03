@@ -25,8 +25,8 @@ def init_db():
         """)
 
         # Insert dummy users
-        c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ("alice", "alicepass"))
-        c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ("bob", "bobpass"))
+        c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ("alice", "password"))
+        c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ("bob", "password"))
 
         # Insert dummy messages
         c.execute("INSERT OR IGNORE INTO messages (id, user_id, content) VALUES (?, ?, ?)", (1, 1, "Hello, this is a secret message for Alice"))

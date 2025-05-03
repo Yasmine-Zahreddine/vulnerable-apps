@@ -55,11 +55,11 @@ def dashboard(request: Request):
 @app.get("/logout")
 def logout():
     response = RedirectResponse(url="/login", status_code=302)
-    response.delete_cookie("session_id")  # Example: Clear session cookie
+    response.delete_cookie("session_id")  
     return response
 
 
-# @app.get("/transfer", response_class=HTMLResponse)
+@app.get("/transfer", response_class=HTMLResponse)
 def transfer_form(request: Request):
     username = get_current_user()
     if not username:
@@ -68,7 +68,7 @@ def transfer_form(request: Request):
     return templates.TemplateResponse("transfer.html", {"request": request})
 
 
-# @app.post("/transfer", response_class=HTMLResponse)
+@app.post("/transfer", response_class=HTMLResponse)
 def transfer(request: Request, to_user: str = Form(...), amount: int = Form(...)):
     from_user = get_current_user()
     if not from_user:

@@ -17,9 +17,9 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
     conn = sqlite3.connect("db/users.db")
     cursor = conn.cursor()
 
-    # 🔥 VULNERABLE TO SQL INJECTION!
-    query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
-    print(query)  # Add this before cursor.execute(query)
+    #  VULNERABLE TO SQL INJECTION!
+    query = f"SELECT username, password FROM users WHERE username = '{username}' AND password = '{password}'"
+    print(query)  
     cursor.execute(query)
     result = cursor.fetchone()
     conn.close()

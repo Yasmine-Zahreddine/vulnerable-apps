@@ -14,6 +14,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 async def get_form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
 
+
 @app.post("/submit", response_class=HTMLResponse)
 async def submit_form(request: Request, comment: str = Form(...)):
     return templates.TemplateResponse("thank_you.html", {"request": request, "comment": comment})

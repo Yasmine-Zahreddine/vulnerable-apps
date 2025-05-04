@@ -81,9 +81,7 @@ def transfer(request: Request, to_user: str = Form(...), amount: int = Form(...)
     conn = sqlite3.connect("csrf.db")
     cursor = conn.cursor()
 
-    # Deduct from sender
     cursor.execute("UPDATE users SET balance = balance - ? WHERE username = ?", (amount, from_user))
-    # Add to recipient
     cursor.execute("UPDATE users SET balance = balance + ? WHERE username = ?", (amount, to_user))
 
     conn.commit()

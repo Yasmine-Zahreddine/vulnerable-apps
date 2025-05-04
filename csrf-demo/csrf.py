@@ -1,8 +1,5 @@
-# csrf.py
-
 import secrets
 
-# In-memory store (for demo purposes — in real apps use a DB or session)
 csrf_tokens = {}
 
 def generate_csrf_token(username: str) -> str:

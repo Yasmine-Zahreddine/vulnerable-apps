@@ -29,6 +29,7 @@ def ping_host(request: Request, host: str = Form(...)):
 # Split command into a list (no shell=True)
 # This is a safer way to execute commands
 # Adds a list for the command and arguments
+
 # @app.post("/ping")
 # def secure_ping(host: str = Form(...)):
 #     try:

@@ -11,7 +11,6 @@ def init_db():
         balance INTEGER NOT NULL
     )""")
 
-    # Add two users if not exists
     users = [("alice", "password", 100), ("bob", "password", 50)]
     for u in users:
         cursor.execute("INSERT OR IGNORE INTO users VALUES (?, ?, ?)", u)

@@ -3,6 +3,9 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 import sqlite3
+from database import init_db
+
+init_db()
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -14,7 +17,7 @@ def get_login(request: Request):
 
 @app.post("/login", response_class=HTMLResponse)
 def login(request: Request, username: str = Form(...), password: str = Form(...)):
-    conn = sqlite3.connect("db/users.db")
+    conn = sqlite3.connect("sqli.db")
     cursor = conn.cursor()
 
     #  VULNERABLE TO SQL INJECTION!
@@ -31,12 +34,11 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
 
 
 
-# This is the vulnerable code that allows SQL injection
 # The following code is a demonstration of how to use parameterized queries to prevent SQL injection
 
 # @app.post("/login", response_class=HTMLResponse)
 # def login(request: Request, username: str = Form(...), password: str = Form(...)):
-#     conn = sqlite3.connect("db/users.db")
+#     conn = sqlite3.connect("sqli.db")
 #     cursor = conn.cursor()
 
 #     # Using parameterized query

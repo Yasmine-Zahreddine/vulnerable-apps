@@ -18,6 +18,10 @@ init_db()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
+@app.get("/", response_class=HTMLResponse)
+def root(request: Request):
+    return RedirectResponse(url="/login")
+
 @app.get("/login", response_class=HTMLResponse)
 def login_form(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})

@@ -1,11 +1,16 @@
 from fastapi import FastAPI, Request, Form
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 import os
 import subprocess
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+
+
+@app.get("/", response_class=HTMLResponse)
+def root(request: Request):
+    return RedirectResponse(url="/ping")
 
 
 @app.get("/ping", response_class=HTMLResponse)

@@ -30,16 +30,16 @@ def ping_host(request: Request, host: str = Form(...)):
 # This is a safer way to execute commands
 # Adds a list for the command and arguments
 
-# @app.post("/ping")
-# def secure_ping(host: str = Form(...)):
+# @app.post("/ping", response_class=HTMLResponse)
+# def secure_ping(request: Request, host: str = Form(...)):
 #     try:
 #         output = subprocess.check_output(
 #             ["ping", "-c", "1", host],
 #             stderr=subprocess.STDOUT,
 #             timeout=5
 #         )
-#         return HTMLResponse(f"<pre>{output.decode()}</pre>")
+#         return templates.TemplateResponse("result.html", {"request": request, "output": output.decode()})
 #     except subprocess.CalledProcessError as e:
-#         return HTMLResponse(f"<pre>Ping failed:\n{e.output.decode()}</pre>", status_code=400)
+#         return templates.TemplateResponse("result.html", {"request": request, "output": f"Ping failed:\n{e.output.decode()}"})
 #     except subprocess.TimeoutExpired:
-#         return HTMLResponse("<pre>Ping timed out</pre>", status_code=408)
+#         return templates.TemplateResponse("result.html", {"request": request, "output": "Ping timed out"})

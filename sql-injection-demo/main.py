@@ -30,7 +30,7 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
     if result:
         return templates.TemplateResponse("welcome.html", {"request": request, "username": username})
     else:
-        return HTMLResponse(content="Invalid login", status_code=401)
+        return templates.TemplateResponse("invalid_login.html", {"request": request})
 
 
 
@@ -50,4 +50,4 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
 #     if result:
 #         return templates.TemplateResponse("welcome.html", {"request": request, "username": username})
 #     else:
-#         return HTMLResponse(content="Invalid login", status_code=401)
+#         return templates.TemplateResponse("invalid_login.html", {"request": request})
